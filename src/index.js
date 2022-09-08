@@ -5,6 +5,7 @@ const app = express();
 
 const port = process.env.PORT || 3000
 
+require('./config/database')
 
 app.use(express.json());
 
