@@ -1,12 +1,19 @@
-const { Router } = require('express')
+const express = require('express');
 const ProdutoController = require('./controller/ProdutoController')
+const UserController = require('./controller/UserController')
+const login = require("./middleware/login")
 
-const router = Router()
+const routes = express('routes');
 
-router.get('/', ProdutoController.index)
-router.post('/', ProdutoController.create)
-router.get('/busca/:id', ProdutoController.buscarPorId)
-router.delete('/deleta/:id', ProdutoController.delete)
-router.put('/atualiza/:id', ProdutoController.atualiza)
+routes.get('/', login, ProdutoController.index)
+routes.post('/', ProdutoController.create)
+routes.get('/busca/:id', ProdutoController.buscarPorId)
+routes.delete('/deleta/:id', ProdutoController.delete)
+routes.put('/atualiza/:id', ProdutoController.atualiza)
 
-module.exports = router
+routes.get('/users', UserController.index);
+routes.post('/login', UserController.login);
+routes.post('/users', UserController.create);
+
+
+module.exports = routes
