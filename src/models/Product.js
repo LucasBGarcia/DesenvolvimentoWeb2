@@ -5,9 +5,12 @@ const newProductSchema = new Schema({
         type: Number,
         AutoIncrement: true,
     },
-    name: {
+    productName: {
         type: String,
         required: true,
+    },
+    productDescription: {
+        type: String,
     },
 })
 

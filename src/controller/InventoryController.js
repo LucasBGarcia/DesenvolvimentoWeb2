@@ -1,11 +1,12 @@
 const Product = require('../models/Product')
+const Inventory = require('../models/Inventory')
 
 module.exports = {
     async index(req, res) {
         try {
-            const products = await Product.find()
+            const inventory = await Inventory.find({})
 
-            return res.status(200).json(products);
+            return res.status(200).json(inventory);
         } catch (error) {
             return res.status(400).json({ msg: error.message });
         }
@@ -13,7 +14,7 @@ module.exports = {
 
     buscarPorId(req, res) {
         const id = req.params.id;
-        Product.findById(id, (err, produtoEncontrado) => {
+        Inventory.findById(id, (err, produtoEncontrado) => {
 
             if (err) {
                 res.status(500).send(err);
@@ -30,7 +31,7 @@ module.exports = {
     },
     delete(req, res) {
         const id = req.params.id;
-        Product.findByIdAndDelete(id, (err, ProdutoDeletado) => {
+        Inventory.findByIdAndDelete(id, (err, ProdutoDeletado) => {
 
             if (err) {
                 res.status(500).send(err);
@@ -47,9 +48,9 @@ module.exports = {
     },
     atualiza(req, res) {
         const id = req.params.id;
-        const { _productName, _productDescription } = req.body
+        const _amount = req.body
 
-        Product.findByIdAndUpdate(id, _productName, _productDescription, (err, ProdutoAtualizado) => {
+        Inventory.findByIdAndUpdate(id, _amount, (err, ProdutoAtualizado) => {
 
             if (err) {
                 res.status(500).send(err);
@@ -66,10 +67,10 @@ module.exports = {
     },
 
     async create(req, res) {
-        const { productName, productDescription } = req.body
+        const { amount, productId } = req.body
         try {
-            const newProduct = Product.create({ productName, productDescription })
-            return res.status(200).json(newProduct);
+            const newInvetory = Inventory.create({ amount, productId })
+            return res.status(200).json(newInvetory);
         } catch (error) {
             return res.status(400).json({ msg: error.message });
         }
