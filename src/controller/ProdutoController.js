@@ -47,7 +47,8 @@ module.exports = {
     },
     atualiza(req, res) {
         const id = req.params.id;
-        const { _productName, _productDescription } = req.body
+        const _productDescription = req.body
+        const _productName = req.body
 
         Product.findByIdAndUpdate(id, _productName, _productDescription, (err, ProdutoAtualizado) => {
 
@@ -69,7 +70,7 @@ module.exports = {
         const { productName, productDescription } = req.body
         try {
             const newProduct = Product.create({ productName, productDescription })
-            return res.status(200).json(newProduct);
+            return res.status(201).json(newProduct);
         } catch (error) {
             return res.status(400).json({ msg: error.message });
         }

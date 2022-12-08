@@ -5,6 +5,7 @@ module.exports = {
     async index(req, res) {
         try {
             const inventory = await Inventory.find({})
+            //.populate("productId", "productName")
 
             return res.status(200).json(inventory);
         } catch (error) {
@@ -23,9 +24,10 @@ module.exports = {
                 return res.json(produtoEncontrado);
             }
             else {
-                return res.status(404).json(
-                    { Erro: "Produto nao encontrado" }
-                )
+                return res.json(produtoEncontrado);
+                // return res.status(404).json(
+                //     { Erro: "Produto nao encontrado" }
+                // )
             }
         })
     },
@@ -56,6 +58,7 @@ module.exports = {
                 res.status(500).send(err);
             }
             else if (ProdutoAtualizado) {
+                console.log(_amount)
                 return res.json(ProdutoAtualizado);
             }
             else {
@@ -70,10 +73,22 @@ module.exports = {
         const { amount, productId } = req.body
         try {
             const newInvetory = Inventory.create({ amount, productId })
-            return res.status(200).json(newInvetory);
+            return res.status(201).json(newInvetory);
+        } catch (error) {
+            return res.status(400).json({ msg: error.message });
+        }
+    },
+    async createWithId(req, res) {
+        const id = req.params.id;
+        const { amount } = req.body
+        try {
+            const newInvetory = Inventory.create({ amount, productId: id })
+            return res.status(201).json(newInvetory);
         } catch (error) {
             return res.status(400).json({ msg: error.message });
         }
     }
+
+
 }
 

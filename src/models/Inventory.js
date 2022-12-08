@@ -11,7 +11,7 @@ const newProductSchema = new Schema({
     },
     productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+        ref: 'product',
         required: true,
     },
 
